@@ -16,27 +16,34 @@
     justify-content: center;
     padding: 1rem;
   }
+  &__form,
+  &__text,
+  &__button {
+    border-radius: 5px;
+    border-style: none;
+  }
   &__text {
     width: 100%;
-    margin: 0 0 0.75rem;
     font-family: "Poppins", sans-serif;
     padding: 0.25rem;
     font-size: 1rem;
+    &--invalid {
+      border: solid 3px orange;
+    }
   }
   &__button {
     width: 100%;
+    margin: 0.75rem 0 0;
     font-family: "Poppins", sans-serif;
     padding: 0.5rem;
     background-color: $bright-color;
     color: white;
     font-weight: bold;
     letter-spacing: 1px;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
   }
-  &__form,
-  &__text,
-  &__button {
-    border-radius: 5px;
-    border-style: none;
+  &__error {
+    color: orange;
+    font-size: 0.875rem;
   }
 }
