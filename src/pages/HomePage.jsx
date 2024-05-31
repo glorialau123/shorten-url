@@ -1,5 +1,6 @@
 import "./HomePage.scss";
 import whale from "../assets/images/whale_1280.png";
+import Input from "../components/Input/Input";
 
 function HomePage() {
   return (
@@ -9,6 +10,7 @@ function HomePage() {
         <h2 className="home__subheading">Shorten your URL</h2>
         <img src={whale} alt="banner of a whale" className="home__banner" />
       </section>
+      <Input />
     </div>
   );
 }

@@ -1,0 +1,42 @@
+@use "../../styles/partials/variables" as *;
+
+.input {
+  padding: 1rem 2rem;
+
+  &__form {
+    width: 100%;
+    background-color: $emphasis-color;
+  }
+
+  &__area {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  &__text {
+    width: 100%;
+    margin: 0 0 0.75rem;
+    font-family: "Poppins", sans-serif;
+    padding: 0.25rem;
+    font-size: 1rem;
+  }
+  &__button {
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    padding: 0.5rem;
+    background-color: $bright-color;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+  }
+  &__form,
+  &__text,
+  &__button {
+    border-radius: 5px;
+    border-style: none;
+  }
+}
