@@ -1,10 +1,15 @@
 import { useState } from "react";
 import "./Input.scss";
 import axios from "axios";
+import UrlLink from "../UrlLink/UrlLink";
+
+const { REACT_APP_BACKEND_URL } = process.env;
 
 function Input() {
   const [newUrl, setNewUrl] = useState("");
+  const [savedUrl, setSavedUrl] = useState("");
   const [invalidUrl, setInvalidUrl] = useState("");
+  const [shortUrl, setShortUrl] = useState("");
 
   function addSchemeIfMissing(urlString) {
     if (!/^https?:\/\//i.test(urlString)) {
@@ -33,6 +38,22 @@ function Input() {
       console.log(urlWithScheme);
       if (isValidUrl(urlWithScheme)) {
         setInvalidUrl("");
+        setSavedUrl(newUrl);
+        setNewUrl("");
+
+        const postUrl = async function () {
+          try {
+            const response = await axios.post(`${REACT_APP_BACKEND_URL}/shortenurl`, {
+              url: urlWithScheme,
+            });
+            const newShortUrl = response.data.result_url;
+            await setShortUrl(newShortUrl);
+            console.log("newShortURL", newShortUrl);
+          } catch (error) {
+            console.error("error posting URL");
+          }
+        };
+        postUrl();
       }
     } else {
       setInvalidUrl("input__text--invalid");
@@ -60,6 +81,7 @@ function Input() {
           <button className="input__button">Shorten Link</button>
         </div>
       </form>
+      {shortUrl && <UrlLink shortUrl={shortUrl} savedUrl={savedUrl} />}
     </div>
   );
 }

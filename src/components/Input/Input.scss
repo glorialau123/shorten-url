@@ -27,6 +27,10 @@
     font-family: "Poppins", sans-serif;
     padding: 0.25rem;
     font-size: 1rem;
+    &:focus {
+      outline: none;
+      border: solid 3px $bright-color;
+    }
     &--invalid {
       border: solid 3px orange;
     }
