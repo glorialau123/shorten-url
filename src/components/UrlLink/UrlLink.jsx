@@ -1,16 +1,16 @@
 import "./UrlLink.scss";
 
 function UrlLink(props) {
-  const { savedUrl, shortUrl } = props;
+  const { savedUrlInSessionStorage, shortUrlInSessionStorage } = props;
   return (
     <div className="links">
       <div className="links__area">
-        <p className="links__original">{savedUrl}</p>
-        <p className="links__shortened">{shortUrl}</p>
+        <p className="links__original">{savedUrlInSessionStorage}</p>
+        <p className="links__shortened">{shortUrlInSessionStorage}</p>
       </div>
       <button
         className="links__button"
-        onClick={() => navigator.clipboard.writeText(`${shortUrl}`)}
+        onClick={() => navigator.clipboard.writeText(`${shortUrlInSessionStorage}`)}
       >
         Copy URL
       </button>

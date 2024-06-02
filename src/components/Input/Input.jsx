@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Input.scss";
 import axios from "axios";
 import UrlLink from "../UrlLink/UrlLink";
@@ -10,6 +10,12 @@ function Input() {
   const [savedUrl, setSavedUrl] = useState("");
   const [invalidUrl, setInvalidUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+  const [urlArray, setUrlArray] = useState([]);
+
+  useEffect(() => {
+    const storedUrls = JSON.parse(sessionStorage.getItem("shortUrls")) || [];
+    setUrlArray(storedUrls);
+  }, []);
 
   function addSchemeIfMissing(urlString) {
     if (!/^https?:\/\//i.test(urlString)) {
@@ -47,12 +53,23 @@ function Input() {
               url: urlWithScheme,
             });
             const newShortUrl = response.data.result_url;
-            await setShortUrl(newShortUrl);
-            console.log("newShortURL", newShortUrl);
+
+            //store shortUrl in session storage; when a get new shortUrl, session storage stores it again. For every new shortUrl generated, the stored key/value is retrieved, a new UrlLink component is created.
+            //update the urlArray state and session storage sychronously
+            setUrlArray((prevUrlArray) => {
+              const updatedUrlArray = [
+                ...prevUrlArray,
+                { original: urlWithScheme, short: newShortUrl },
+              ];
+              sessionStorage.setItem("shortUrls", JSON.stringify(updatedUrlArray));
+              return updatedUrlArray;
+            });
+            setShortUrl(newShortUrl);
           } catch (error) {
             console.error("error posting URL");
           }
         };
+
         postUrl();
       }
     } else {
@@ -81,7 +98,19 @@ function Input() {
           <button className="input__button">Shorten Link</button>
         </div>
       </form>
-      {shortUrl && <UrlLink shortUrl={shortUrl} savedUrl={savedUrl} />}
+      {/* {shortUrl && <UrlLink shortUrl={shortUrl} savedUrl={savedUrl} />} */}
+      <div className="input__list">
+        {urlArray.length > 0 &&
+          urlArray
+            .reverse()
+            .map((url, index) => (
+              <UrlLink
+                key={index}
+                shortUrlInSessionStorage={url.short}
+                savedUrlInSessionStorage={url.original}
+              />
+            ))}
+      </div>
     </div>
   );
 }
