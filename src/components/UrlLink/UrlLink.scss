@@ -1,4 +1,5 @@
 @use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
 
 .links {
   margin: 2rem 0 1rem;
@@ -6,26 +7,39 @@
   border: solid 1px $emphasis-color;
   padding: 0.5rem 1rem;
   border-radius: 5px;
+  @include tablet {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 2rem;
+  }
 
   &__area {
     display: flex;
     flex-direction: column;
     padding: 0.5rem 0.5rem 0;
+    @include tablet {
+      width: 100%;
+    }
   }
   &__shortened {
     color: $bright-color;
-    font-size: 0.875rem;
   }
   &__shortened,
   &__original {
     margin: 0 0 0.5rem;
     overflow-wrap: break-word;
     max-width: 100%;
+    font-size: 0.875rem;
+    @include tablet {
+      font-size: 1rem;
+    }
+    @include desktop {
+      font-size: 1.25rem;
+    }
   }
   &__original {
     border-bottom: solid 1px $emphasis-color;
     color: $emphasis-color;
-    font-size: 0.875rem;
   }
   &__button {
     padding: 0.25rem;
@@ -38,5 +52,21 @@
     color: white;
     font-weight: bold;
     letter-spacing: 1px;
+    &:hover {
+      cursor: pointer;
+    }
+    &--clicked {
+      background-color: $emphasis-color;
+    }
+    @include tablet {
+      width: 50%;
+      margin: 0 0 0 1rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    @include desktop {
+      font-size: 1.25rem;
+    }
   }
 }

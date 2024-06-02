@@ -11,6 +11,7 @@ function Input() {
   const [invalidUrl, setInvalidUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [urlArray, setUrlArray] = useState([]);
+  const [copiedStatus, setCopiedStatus] = useState({});
 
   useEffect(() => {
     const storedUrls = JSON.parse(sessionStorage.getItem("shortUrls")) || [];
@@ -78,6 +79,11 @@ function Input() {
     }
   }
 
+  function handleCopy(shortUrl) {
+    setCopiedStatus((prevStatus) => ({ ...prevStatus, [shortUrl]: true }));
+    navigator.clipboard.writeText(shortUrl);
+  }
+
   return (
     <div className="input">
       <form className="input__form" onSubmit={handleSubmit}>
@@ -102,12 +108,15 @@ function Input() {
       <div className="input__list">
         {urlArray.length > 0 &&
           urlArray
+            .slice()
             .reverse()
             .map((url, index) => (
               <UrlLink
-                key={index}
+                key={`${url.short}-${index}`}
                 shortUrlInSessionStorage={url.short}
                 savedUrlInSessionStorage={url.original}
+                copiedStatus={copiedStatus[url.short] || false}
+                onCopy={() => handleCopy(url.short)}
               />
             ))}
       </div>
