@@ -3,7 +3,7 @@ import "./Input.scss";
 import axios from "axios";
 import UrlLink from "../UrlLink/UrlLink";
 
-const { REACT_APP_BACKEND_URL } = process.env;
+const { REACT_APP_BACKEND_URL, REACT_APP_API_TOKEN } = process.env;
 
 function Input() {
   const [newUrl, setNewUrl] = useState("");
@@ -12,6 +12,8 @@ function Input() {
   const [shortUrl, setShortUrl] = useState("");
   const [urlArray, setUrlArray] = useState([]);
   const [copiedStatus, setCopiedStatus] = useState({});
+
+  console.log(REACT_APP_API_TOKEN);
 
   useEffect(() => {
     const storedUrls = JSON.parse(sessionStorage.getItem("shortUrls")) || [];
@@ -50,10 +52,20 @@ function Input() {
 
         const postUrl = async function () {
           try {
-            const response = await axios.post(`${REACT_APP_BACKEND_URL}/shortenurl`, {
-              url: urlWithScheme,
-            });
-            const newShortUrl = response.data.result_url;
+            const response = await axios.post(
+              `https://api.tinyurl.com/create?api_token=${REACT_APP_API_TOKEN}`,
+              {
+                url: urlWithScheme,
+              }
+            );
+            console.log(response.data.data);
+            const newShortUrl = `${response.data.data.domain}/${response.data.data.alias}`;
+            //original:
+            // const response = await axios.post(`${REACT_APP_BACKEND_URL}/shortenurl`, {
+            //   url: urlWithScheme,
+            // });
+
+            // const newShortUrl = response.data.result_url;
 
             //store shortUrl in session storage; when a get new shortUrl, session storage stores it again. For every new shortUrl generated, the stored key/value is retrieved, a new UrlLink component is created.
             //update the urlArray state and session storage sychronously
