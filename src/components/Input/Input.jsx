@@ -117,6 +117,8 @@ function Input() {
                 savedUrlInSessionStorage={url.original}
                 copiedStatus={copiedStatus[url.short] || false}
                 onCopy={() => handleCopy(url.short)}
+                savedUrl={savedUrl}
+                shortUrl={shortUrl}
               />
             ))}
       </div>
