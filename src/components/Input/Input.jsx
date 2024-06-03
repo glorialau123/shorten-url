@@ -3,7 +3,7 @@ import "./Input.scss";
 import axios from "axios";
 import UrlLink from "../UrlLink/UrlLink";
 
-const {  REACT_APP_API_TOKEN } = process.env;
+const { REACT_APP_API_TOKEN } = process.env;
 
 function Input() {
   const [newUrl, setNewUrl] = useState("");
@@ -12,8 +12,6 @@ function Input() {
   const [shortUrl, setShortUrl] = useState("");
   const [urlArray, setUrlArray] = useState([]);
   const [copiedStatus, setCopiedStatus] = useState({});
-
-  console.log(REACT_APP_API_TOKEN);
 
   useEffect(() => {
     const storedUrls = JSON.parse(sessionStorage.getItem("shortUrls")) || [];
@@ -31,10 +29,9 @@ function Input() {
     try {
       new URL(urlString);
       setInvalidUrl("");
-      console.log("true");
+
       return true;
     } catch (err) {
-      console.log("false");
       setInvalidUrl("input__text--invalid");
       return false;
     }
@@ -44,7 +41,6 @@ function Input() {
     event.preventDefault();
     if (newUrl) {
       const urlWithScheme = addSchemeIfMissing(newUrl);
-      console.log(urlWithScheme);
       if (isValidUrl(urlWithScheme)) {
         setInvalidUrl("");
         setSavedUrl(newUrl);
@@ -58,7 +54,7 @@ function Input() {
                 url: urlWithScheme,
               }
             );
-            console.log(response.data.data);
+
             const newShortUrl = `${response.data.data.domain}/${response.data.data.alias}`;
 
             //update the urlArray state and session storage sychronously
