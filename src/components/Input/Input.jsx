@@ -3,7 +3,7 @@ import "./Input.scss";
 import axios from "axios";
 import UrlLink from "../UrlLink/UrlLink";
 
-const { REACT_APP_BACKEND_URL, REACT_APP_API_TOKEN } = process.env;
+const {  REACT_APP_API_TOKEN } = process.env;
 
 function Input() {
   const [newUrl, setNewUrl] = useState("");
@@ -60,14 +60,7 @@ function Input() {
             );
             console.log(response.data.data);
             const newShortUrl = `${response.data.data.domain}/${response.data.data.alias}`;
-            //original:
-            // const response = await axios.post(`${REACT_APP_BACKEND_URL}/shortenurl`, {
-            //   url: urlWithScheme,
-            // });
 
-            // const newShortUrl = response.data.result_url;
-
-            //store shortUrl in session storage; when a get new shortUrl, session storage stores it again. For every new shortUrl generated, the stored key/value is retrieved, a new UrlLink component is created.
             //update the urlArray state and session storage sychronously
             setUrlArray((prevUrlArray) => {
               const updatedUrlArray = [
@@ -116,7 +109,6 @@ function Input() {
           <button className="input__button">Shorten Link</button>
         </div>
       </form>
-      {/* {shortUrl && <UrlLink shortUrl={shortUrl} savedUrl={savedUrl} />} */}
       <div className="input__list">
         {urlArray.length > 0 &&
           urlArray
