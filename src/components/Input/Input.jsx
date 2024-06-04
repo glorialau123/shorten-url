@@ -26,15 +26,32 @@ function Input() {
   }
 
   function isValidUrl(urlString) {
-    try {
-      new URL(urlString);
+    // try {
+    const pattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$", // fragment locator
+      "i"
+    );
+    if (pattern.test(urlString)) {
       setInvalidUrl("");
-
       return true;
-    } catch (err) {
+    } else {
       setInvalidUrl("input__text--invalid");
       return false;
     }
+
+    // new URL(urlString);
+    // setInvalidUrl("");
+
+    // return true;
+    // } catch (err) {
+    //   setInvalidUrl("input__text--invalid");
+    //   return false;
+    // }
   }
 
   function handleSubmit(event) {
