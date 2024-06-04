@@ -106,19 +106,21 @@ function Input() {
     <div className="input">
       <form className="input__form" onSubmit={handleSubmit}>
         <div className="input__area">
-          <input
-            type="text"
-            className={`input__text ${invalidUrl}`}
-            placeholder="Enter a link to shorten..."
-            value={newUrl}
-            onChange={(event) => {
-              setNewUrl(event.target.value);
-              if (event.target.value) {
-                setInvalidUrl("");
-              }
-            }}
-          />
-          {invalidUrl && <p className="input__error">Please enter a valid URL</p>}
+          <div className="input__space">
+            <input
+              type="text"
+              className={`input__text ${invalidUrl}`}
+              placeholder="Enter a link to shorten..."
+              value={newUrl}
+              onChange={(event) => {
+                setNewUrl(event.target.value);
+                if (event.target.value) {
+                  setInvalidUrl("");
+                }
+              }}
+            />
+            {invalidUrl && <p className="input__error">Please enter a valid URL</p>}
+          </div>
           <button className="input__button">Shorten Link</button>
         </div>
       </form>
